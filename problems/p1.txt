@@ -1,0 +1,15 @@
+prim ii Adevarat
+nyi n
+d ii 2
+
+de n rest d lafel 0
+	p ii Adevarat
+d ii 3
+
+pana d ori d sub_sau n
+dyi
+	de n rest d lafel 0
+		p ii Adevarat
+	d ii d cu 2
+hoo
+zai p

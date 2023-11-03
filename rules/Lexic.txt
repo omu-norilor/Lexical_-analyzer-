@@ -1,0 +1,54 @@
+Specification (file Lexic.txt)
+
+Alphabet:
+
+       a. Upper (A-Z) and lower case letters (a-z) of the English alphabet
+
+       b. Underline character '_';
+
+       c. Decimal digits (0-9);
+
+Lexic:
+
+      a.Special symbols, representing:
+
+- operators:  cu +, ii :=, far -, ori *, rest %, sub <, peste >, sub_sau <=, peste_sau>=, la_fel =, impartit /)
+
+- separators:  space, deci (, atat ), dyi {, hoo } 
+
+- reserved words:
+
+    pana deci atat dyi hoo de nyi zai cu far ori impartit Adevarat 
+    Fals radical ii sub peste sub_sau peste_sau la_fel 
+
+
+      b.identifiers
+
+  -a sequence of letters and  digits, such that the first character is a letter; the rule is:
+
+    identifier ::= letter | letter{letter}{digit}
+
+    letter ::= "A" | "B" | . ..| "Z"
+
+    digit ::= "0" | "1" |...| "9"
+
+
+      c.constants
+
+1.integer - rule:
+
+      noconst:="+"no|"-"no|no
+
+      no:=digit{no}
+
+2.character
+
+    character:='letter'|'digit'
+
+3.string
+
+      constchar:="string"
+
+      string:=char{string}
+
+      char:=letter|digit
