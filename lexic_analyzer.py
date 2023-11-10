@@ -5,6 +5,7 @@
 # Output: PIF.out, ST.out, message “lexically correct” or “lexical error + location”
 from symbol_table import SymbolTable
 from pif import pif
+from finite_automata import FiniteAutomata
 
 class lexicScanner:
     def __init__(self):
@@ -33,10 +34,12 @@ class lexicScanner:
 
     def isIdentifier(self, token):
         # check if string contains only letters and numbers and is shorterthan 100 characters
-        return token.isalnum() and len(token) < 50
+        fa = FiniteAutomata("./rules/fa_identifier.in")
+        return fa.checkAccepted(token) and len(token) < 50
     
     def isConstant(self, token):
-        if token.isnumeric():
+        fa = FiniteAutomata("./rules/fa_integer.in")
+        if fa.checkAccepted(token):
             return True
         
         if token == "Adevarat" or token == "Fals":
@@ -67,15 +70,17 @@ class lexicScanner:
 if __name__  == "__main__":
     ls = lexicScanner()
 
-    # print("Running p1.txt")
-    # ls.run("./problems/p1.txt")
+    print("Running p1.txt")
+    ls.run("./problems/p1.txt")
+    ls.pif.display()
+    ls.st.display()
 
     # print("Running p2.txt")
     # ls.run("./problems/p2.txt")
     # ls.pif.display()
 
-    print("Running p3.txt")
-    ls.run("./problems/p3.txt")
-    ls.pif.display()
-    ls.st.display()
+    # print("Running p3.txt")
+    # ls.run("./problems/p3.txt")
+    # ls.pif.display()
+    # ls.st.display()
 

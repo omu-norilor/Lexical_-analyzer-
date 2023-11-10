@@ -1,5 +1,5 @@
 from transition import Transition
-from helpers import readFileToList, splitString, readUserInput
+from helpers import readFileToList, readUserInput
 class FiniteAutomata ():
 
     def __init__(self,filename): 
@@ -13,13 +13,16 @@ class FiniteAutomata ():
 
     def readFromFile(self) :
         lines = readFileToList(self.filename)
-        self.states = splitString(lines[0])
-        self.alphabet = splitString(lines[1])
+        self.states = lines[0].split(" ")
+        self.alphabet = lines[1].split(" ")
         self.initialState = lines[2]
-        self.finalStates = splitString(lines[3])
+        self.finalStates = lines[3].split(" ")
         for i in range(4, len(lines)):
             tokens = lines[i].split(" ")
-            self.transitions.append(Transition(tokens[0], tokens[2], tokens[1]))
+            fromState = tokens[0]
+            toState = tokens[-1]
+            symbols = tokens[1:-1]
+            self.transitions.append(Transition(fromState, toState, symbols))
 
     def isDeterministic(self):
         for state in self.states:
@@ -31,54 +34,25 @@ class FiniteAutomata ():
     def getTransitionsFromStateAndSymbol(self,state,symbol): 
         result = []
         for transition in self.transitions:
-            if transition.getFromState()==state and transition.getSymbol()==symbol:
+            if transition.getFromState()==state and symbol in transition.getSymbols():
                 result.append(transition)
         return result
 
-    def printElements(self, elements):
-        result = []
-        for state in elements:
-            result.append(state)
-        print(result)
+    def getStates(self):
+        return self.states
 
-    def printStates(self):
-        self.printElements(self.states)
+    def getAlphabet(self):
+        return self.alphabet
 
-    def printAlphabet(self):
-        self.printElements(self.alphabet)
+    def getFinalStates(self):
+        return self.finalStates
 
-    def printFinalStates(self):
-        self.printElements(self.finalStates)
+    def getTransitions(self): 
+        return self.transitions
 
-    def printTransitions(self): 
-        for transition in self.transitions:
-            print(transition)
-
-    def printInitialState(self):
-        print(self.initialState)
-
-    def printMenu(self):
-        print("1. Print states")
-        print("2. Print alphabet")
-        print("3. Print transitions")
-        print("4. Print initial state")
-        print("5. Print final states")
-
-    def displayThings(self):
-        while (True):
-            self.printMenu()
-            input = readUserInput("Enter the input: ")
-            if (input == ""):
-                print("The input is empty.")
-                return
-        
-            if input == "1": self.printStates()
-            elif input == "2": self.printAlphabet()
-            elif input == "3": self.printTransitions()
-            elif input == "4": self.printInitialState()
-            elif input == "5": self.printFinalStates()
-            else: print("My work is done here."); return
-
+    def getInitialState(self):
+        return self.initialState
+    
     def checkAccepted(self, sequence):
         return self.checkAcceptedRec(sequence, self.initialState, 0)
         
@@ -102,9 +76,20 @@ class FiniteAutomata ():
                 values.append(self.checkAcceptedRec(sequence, transition.getToState(), count+1))
             return True in values
 
+    def printInfo(self):
+        print(f"States: {self.getStates()}")
+        print(f"Alphabet: {self.getAlphabet()}")
+        print(f"Transitions: ")
+        for transition in self.getTransitions(): print(transition)
+        print(f"Initial state: {self.getInitialState()}")
+        print(f"Final states: {self.getFinalStates()}")
+        print(" ")
 
 if __name__ == "__main__":
-    fa = FiniteAutomata("./rules/fa.in")
+    fa = FiniteAutomata("./rules/fa_dummy.in")
+
+    fa.printInfo()
+
     if fa.isDeterministic():
         print("The automata is deterministic.")
         print(f"for 0  accepted status is {fa.checkAccepted('0')}")
@@ -114,5 +99,4 @@ if __name__ == "__main__":
     else:
         print("The automata is not deterministic.")
 
-    print(" ")
-    fa.displayThings()
+    

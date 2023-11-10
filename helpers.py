@@ -20,11 +20,6 @@ def writeToFile(filename, content):
   except Exception as e:
     print(f"An error occurred while writing to file {filename}.")
     print(e)
- 
-
-def splitString(to_split):
-    list= to_split.split(" ")
-    return list
 
 def readUserInput(message):
     print(message)

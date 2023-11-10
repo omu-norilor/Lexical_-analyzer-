@@ -17,11 +17,18 @@ class Transition():
     def setToState(self, toState):
         self.toState = toState
 
-    def getSymbol(self):
+    def getSymbols(self):
         return self.symbol
 
     def setSymbol(self, symbol):
         self.symbol = symbol
+    
+    def toString(self, list):
+        stringo=""
+        for element in list:
+            stringo+=" "+str(element)
+        return stringo
+    
 
     def __str__(self):
-        return "d(" + self.fromState + ", " + self.symbol + ") = " + self.toState
+        return "d(" + self.fromState + ", " + self.toString(self.symbol) + ") = " + self.toState
